@@ -2,9 +2,20 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
+import StripeCheckout from 'react-stripe-checkout';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [product, setProduct] = useState({
+    name:"Nilesh by himself",
+    price:1000,
+    productBy:"facebook"
+  })
+
+  const makePayment = token => {
+    const body = {
+      token,
+    }
+  }
 
   return (
     <>
@@ -16,18 +27,18 @@ function App() {
           <img src={reactLogo} className="logo react" alt="React logo" />
         </a>
       </div>
-      <h1>Sanat Sharma</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
+      
       <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
+        Click on the Vite and React logos to learn more {import.meta.env.REACT_APP_KEY}
       </p>
+      <StripeCheckout 
+      stripeKey='pk_test_51QQS8kGvPiJHqRNuRdUOXT4dgoMuc1oKFM8Wq2LyHwN9r8UIUFzEQWlSvXLyoIhlK7j4WkshcSIIYjC0tAe6hUpX001ONGe02w'
+      token=''
+      name={product.name}
+      amount={product.price} // cents
+      panelLabel="paisa de" // prepended to the amount in the bottom pay button
+      currency="USD"
+      />
     </>
   )
 }
